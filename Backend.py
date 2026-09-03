@@ -38,7 +38,7 @@ def handle_signup():
     msg['to'] = MY_EMAIL
 
     try:
-        with smtplib.SMTP('smtp.mail.me.com', 587) as server:
+        with smtplib.SMTP('smtp.mail.me.com', 587, timeout=10) as server:
             server.ehlo()
             server.starttls()
             server.ehlo()
@@ -47,7 +47,7 @@ def handle_signup():
         return f"<h1>Thank you, {user_name}! Your message has been sent.</h1>"
     except Exception as e:
         print("iCloud SMTP Error", e)
-        return "<h1>Failed to send email. Check your server terminal.</h1>"
+        return "<h1>Failed to send email. Check your server terminal.</h1>", 500
 
 
 @app.errorhandler(429)
